@@ -1,0 +1,27 @@
+#!/bin/sh
+
+echo -n $0: 'WIDTH... '
+
+cat >test.bas <<'eof'
+width 10
+print "Hello world."
+width 0
+print "Hello world."
+eof
+
+cat >test.ref <<'eof'
+Hello worl
+d.
+Hello world.
+eof
+
+sh ./test/runbas test.bas >test.data
+
+if cmp test.ref test.data
+then
+  rm -f test.*
+  echo passed
+else
+  echo failed
+  exit 1
+fi

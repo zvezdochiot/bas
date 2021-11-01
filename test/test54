@@ -1,0 +1,54 @@
+#!/bin/sh
+
+echo -n $0: 'UNNUM... '
+
+cat >test.bas <<'eof'
+100 for i=1 to 10
+130 gosub 180 
+131 next
+132 goto 200
+180 print "foo"
+190 return
+200 k=1
+210 restore 300
+220 read a,b,c
+230 print using 400;a,b,c
+240 k=k+1:if k<5 then goto 210
+250 end
+300 data 1,2,3
+400 image "## ## ##"
+eof
+
+cat >test.input <<'eof'
+load "test.bas"
+unnum
+save "test.bas"
+eof
+cat >test.ref <<'eof'
+    for i=1 to 10
+      gosub 180
+    next
+    goto 200
+180 print "foo"
+    return
+200 k=1
+210 restore 300
+    read a,b,c
+    print using 400;a,b,c
+    k=k+1 : if k<5 then goto 210
+    end
+300 data 1,2,3
+400 image "## ## ##"
+eof
+
+sh ./test/runbas <test.input
+
+if cmp test.ref test.bas
+then
+  rm -f test.*
+  echo passed
+else
+  echo failed
+  exit 1
+fi
+

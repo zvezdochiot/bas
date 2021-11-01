@@ -1,0 +1,54 @@
+#!/bin/sh
+
+echo -n $0: 'RENUM... '
+
+cat >test.bas <<'eof'
+100 for i=1 to 10
+130 gosub 180 
+131 next
+132 goto 200
+180 print "foo"
+190 return
+200 k=1
+210 restore 300
+220 read a,b,c
+230 print using 400;a,b,c
+240 k=k+1:if k<5 then goto 210
+250 end
+300 data 1,2,3
+400 image "## ## ##"
+eof
+
+cat >test.input <<'eof'
+load "test.bas"
+renum 1000,50
+save "test.bas"
+eof
+cat >test.ref <<'eof'
+1000 for i=1 to 10
+1050   gosub 1200
+1100 next
+1150 goto 1300
+1200 print "foo"
+1250 return
+1300 k=1
+1350 restore 1600
+1400 read a,b,c
+1450 print using 1650;a,b,c
+1500 k=k+1 : if k<5 then goto 1350
+1550 end
+1600 data 1,2,3
+1650 image "## ## ##"
+eof
+
+sh ./test/runbas <test.input
+
+if cmp test.ref test.bas
+then
+  rm -f test.*
+  echo passed
+else
+  echo failed
+  exit 1
+fi
+

@@ -1,0 +1,42 @@
+#!/bin/sh
+
+echo -n $0: 'Matrix determinant... '
+
+cat >test.bas <<'eof'
+width 120
+dim a(4,4),b(4,4)
+mat read a
+mat print a;
+print
+data -6,2,2,23
+data -12,-6,0,16
+data 2,4,2,17
+data 4,8,2,2
+mat b=inv(a)
+mat print b
+print det
+eof
+
+cat >test.ref <<'eof'
+-6  2  2  23 
+-12 -6  0  16 
+ 2  4  2  17 
+ 4  8  2  2 
+
+-0.203125      0.046875      0.234375     -0.03125      
+ 1.15625      -0.84375      -0.71875      -0.4375       
+-4.5           3.5           2.5           2.5          
+ 0.28125      -0.21875      -0.09375      -0.1875       
+-256 
+eof
+
+sh ./test/runbas test.bas >test.data
+
+if cmp test.ref test.data
+then
+  rm -f test.*
+  echo passed
+else
+  echo failed
+  exit 1
+fi

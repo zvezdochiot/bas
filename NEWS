@@ -1,0 +1,14 @@
+Changes compared to version 2.4
+
+o  truncate bug fixed
+o  Multi line if with hanging comment works now
+o  Add files command
+o  Fixed bug in expression parser
+o  OPTION BASE bug fixed
+o  Matrix inversion test improved
+o  WIDTH 0 bug fixed
+o  Missing error check on multi assignments added
+o  Wrong FOR loop management fixed
+o  Replaced wrong int assignment with long assignment for integers
+o  unnum bugs fixed
+o  HP-UX build works again
