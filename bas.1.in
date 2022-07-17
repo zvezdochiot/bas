@@ -220,20 +220,20 @@ Only the meta characters \fB*?[]\fP are passed through.
 .\"}}}
 .IP "\fBfor\fP \fIlvalue\fP \fB=\fP \fIexpression\fP \fBto\fP \fIexpression\fP [\fBstep\fP \fIexpression\fP]" \"{{{
 .IP "\fBnext\fP \fIlvalue\fP{\fB,\fP\fIlvalue\fP}"
-The \fBfor\fP loop performs the initial variable assignment and then
-executes the statements inside the loop, if the variable is lower or equal
-than the limit (or greater than for negative steps).  The \fBnext\fP
-statement verifies if the variable already reached the value of the
-\fBto\fP \fIexpression\fP.  If not, it increments if by the value of
-the \fBstep\fP \fIexpression\fP and causes a new repetition.  A missing
-\fBstep\fP \fIexpression\fP is treated as \fBstep 1\fP.  The \fBnext\fP
-statement may be followed by a list of lvalues.  Due to the dynamic variable
-geometry, the lvalues themselves
-are only checked for belonging to the same variable as those in \fBfor\fP.
-If no lvalues are given, the
-innermost loop is terminated.  For loops can be left by \fBexit for\fP.
-Note: That statement is not offered by all BASIC dialects and most restrict
-loop variables to scalar variables.
+The \fBfor\fP loop performs the initial variable assignment and evaluates
+the \fBstep\fP \fIexpression\fP, storing the value.  Then it executes the
+statements inside the loop, if the variable is lower or equal than the
+limit (or greater than for negative steps).  The \fBnext\fP statement
+verifies if the variable already reached the value of the \fBto\fP
+\fIexpression\fP.  If not, it increments if by the evaluated \fBstep\fP
+value and causes a new repetition.  A missing \fBstep\fP \fIexpression\fP
+is treated as \fBstep 1\fP.  The \fBnext\fP statement may be followed
+by a list of lvalues.  Due to the dynamic variable geometry, the lvalues
+themselves are only checked for belonging to the same variable as those
+in \fBfor\fP.  If no lvalues are given, the innermost loop is terminated.
+For loops can be left by \fBexit for\fP.  Note: That statement is not
+offered by all BASIC dialects and most restrict loop variables to scalar
+variables.
 .\"}}}
 .IP "\fBget\fP [\fB#\fP]\fIchannel%\fP [\fB,\fP\fIrecord\fP]" \"{{{
 Read the record buffer of \fIchannel%\fP from the file it is connected to,

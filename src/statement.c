@@ -1174,19 +1174,22 @@ struct Value *stmt_FOR(struct Value *value) /*{{{*/
         assert(limit.type!=V_ERROR);
         if (pc.token->type==T_STEP) /* STEP x */ /*{{{*/
         {
-            struct Pc stepPc;
+            struct Pc stepPc,stepValuePc;
 
-            ++pc.token;
             stepPc=pc;
+            ++pc.token;
+            stepValuePc=pc;
             if (eval(&stepValue,"`step'")->type==V_ERROR)
             {
                 Value_destroy(value);
                 *value=stepValue;
-                pc=stepPc;
+                pc=stepValuePc;
                 return value;
             }
             Value_retype(&stepValue,value->type);
             assert(stepValue.type!=V_ERROR);
+            Value_destroy(&stepPc.token->u.step);
+            Value_clone(&stepPc.token->u.step,&stepValue);
         }
         /*}}}*/
         else /* implicit numeric STEP */ /*{{{*/
@@ -2723,13 +2726,7 @@ struct Value *stmt_NEXT(struct Value *value) /*{{{*/
             assert(value->type!=V_ERROR);
             if (pc.token->type==T_STEP)
             {
-                ++pc.token;
-                if (eval(&inc,_("step"))->type==V_ERROR)
-                {
-                    Value_destroy(value);
-                    *value=inc;
-                    return value;
-                }
+                Value_clone(&inc,&pc.token->u.step);
             }
             else VALUE_NEW_INTEGER(&inc,1);
             VALUE_RETYPE(&inc,l->type);

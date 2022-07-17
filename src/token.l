@@ -1002,7 +1002,13 @@ end[ \t]+function	{
                           return T_SLEEP;
                         }
 "spc"			return T_SPC;
-"step"          	return T_STEP;
+"step"			{
+                          if (cur)
+                          {
+                            Value_new_NIL(&cur->u.step);
+                          }
+                          return T_STEP;
+                        }
 "stop"          	{
                           if (cur)
                           {
@@ -1479,7 +1485,7 @@ void Token_destroy(struct Token *token) /*{{{*/
       case T_SHELL:             break;
       case T_SLEEP:             break;
       case T_SPC:               break;
-      case T_STEP:              break;
+      case T_STEP:              Value_destroy(&r->u.step); break;
       case T_STOP:              break;
       case T_STRING:            String_destroy(r->u.string); free(r->u.string); break;
       case T_SUB:               break;

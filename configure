@@ -2229,8 +2229,8 @@ IFS=$ac_save_IFS
 case $host_os in *\ *) host_os=`echo "$host_os" | sed 's/ /-/g'`;; esac
 
 
-VERSION=2.5
-UPDATED='April 23, 2019'
+VERSION=2.6
+UPDATED='July 2, 2019'
 
 ALL_LINGUAS="de"
 

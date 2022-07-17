@@ -1,0 +1,36 @@
+#!/bin/sh
+
+echo -n $0: 'FOR STEP evaluation... '
+
+cat >test.bas <<'eof'
+10 let I1=-3
+20 let K=1
+30 for I1=I1 to -20 step I1
+40   print K,I1
+50   let K=K+1
+60 next I1
+70 print "AFTER: ",I1
+80 end
+eof
+
+cat >test.ref <<'eof'
+ 1            -3 
+ 2            -6 
+ 3            -9 
+ 4            -12 
+ 5            -15 
+ 6            -18 
+AFTER:        -21 
+eof
+
+sh ./test/runbas test.bas >test.data
+
+if cmp test.ref test.data
+then
+  rm -f test.*
+  echo passed
+else
+  echo failed
+  exit 1
+fi
+

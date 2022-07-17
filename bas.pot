@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-23 20:56+0200\n"
+"POT-Creation-Date: 2019-07-02 20:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -95,7 +95,7 @@ msgstr ""
 msgid "length"
 msgstr ""
 
-#: bas.c:801 bas.c:848 statement.c:1720
+#: bas.c:801 bas.c:848 statement.c:1723
 msgid "rhs"
 msgstr ""
 
@@ -807,11 +807,11 @@ msgstr ""
 msgid "time"
 msgstr ""
 
-#: global.c:763 global.c:780 statement.c:179 statement.c:1037 statement.c:1257
-#: statement.c:1436 statement.c:1639 statement.c:1844 statement.c:2193
-#: statement.c:2313 statement.c:2528 statement.c:2859 statement.c:2866
-#: statement.c:2938 statement.c:3086 statement.c:3876 statement.c:3998
-#: statement.c:4032 statement.c:4091
+#: global.c:763 global.c:780 statement.c:179 statement.c:1037 statement.c:1260
+#: statement.c:1439 statement.c:1642 statement.c:1847 statement.c:2196
+#: statement.c:2316 statement.c:2531 statement.c:2856 statement.c:2863
+#: statement.c:2935 statement.c:3083 statement.c:3873 statement.c:3995
+#: statement.c:4029 statement.c:4088
 msgid "channel"
 msgstr ""
 
@@ -824,7 +824,7 @@ msgstr ""
 msgid "Logarithm of negative value"
 msgstr ""
 
-#: global.c:1208 statement.c:2659
+#: global.c:1208 statement.c:2662
 msgid "limit"
 msgstr ""
 
@@ -952,8 +952,8 @@ msgstr ""
 msgid "string"
 msgstr ""
 
-#: statement.c:570 statement.c:1404 statement.c:1532 statement.c:2598
-#: statement.c:2606 statement.c:2869 statement.c:3478
+#: statement.c:570 statement.c:1407 statement.c:1535 statement.c:2601
+#: statement.c:2609 statement.c:2866 statement.c:3475
 msgid "file name"
 msgstr ""
 
@@ -977,117 +977,113 @@ msgstr ""
 msgid "file specification"
 msgstr ""
 
-#: statement.c:1236
+#: statement.c:1239
 msgid "implicit STEP 1:"
 msgstr ""
 
-#: statement.c:1276
+#: statement.c:1279
 msgid "record number"
 msgstr ""
 
-#: statement.c:1294
+#: statement.c:1297
 msgid "`put'/`get' data"
 msgstr ""
 
-#: statement.c:1469 statement.c:1879 statement.c:2249
+#: statement.c:1472 statement.c:1882 statement.c:2252
 msgid "end of file"
 msgstr ""
 
-#: statement.c:1605 statement.c:1611
+#: statement.c:1608 statement.c:1614
 msgid "row"
 msgstr ""
 
-#: statement.c:1616 statement.c:1622
+#: statement.c:1619 statement.c:1625
 msgid "column"
 msgstr ""
 
-#: statement.c:1677 statement.c:1777 statement.c:3906 statement.c:3966
+#: statement.c:1680 statement.c:1780 statement.c:3903 statement.c:3963
 msgid "condition"
 msgstr ""
 
-#: statement.c:1952
+#: statement.c:1955
 msgid "Too much input data\n"
 msgstr ""
 
-#: statement.c:2041
+#: statement.c:2044
 msgid "factor"
 msgstr ""
 
 #. }}}
-#: statement.c:2181
+#: statement.c:2184
 msgid "matrix"
 msgstr ""
 
-#: statement.c:2335 statement.c:3108
+#: statement.c:2338 statement.c:3105
 msgid "format string"
 msgstr ""
 
-#: statement.c:2665
-msgid "step"
-msgstr ""
-
-#: statement.c:2746 statement.c:3515
+#: statement.c:2743 statement.c:3512
 msgid "selector"
 msgstr ""
 
-#: statement.c:2836
+#: statement.c:2833
 msgid "mode or file"
 msgstr ""
 
-#: statement.c:2879 statement.c:2891 statement.c:2964 statement.c:2976
+#: statement.c:2876 statement.c:2888 statement.c:2961 statement.c:2973
 msgid "record length"
 msgstr ""
 
-#: statement.c:3018
+#: statement.c:3015
 msgid "array subscript base"
 msgstr ""
 
-#: statement.c:3054 statement.c:3927
+#: statement.c:3051 statement.c:3924
 msgid "address"
 msgstr ""
 
-#: statement.c:3059
+#: statement.c:3056
 msgid "output value"
 msgstr ""
 
-#: statement.c:3176
+#: statement.c:3173
 msgid "count"
 msgstr ""
 
-#: statement.c:3247
+#: statement.c:3244
 msgid "random number generator seed"
 msgstr ""
 
-#: statement.c:3290
+#: statement.c:3287
 msgid "source file"
 msgstr ""
 
-#: statement.c:3303
+#: statement.c:3300
 msgid "destination file"
 msgstr ""
 
-#: statement.c:3742 statement.c:3749
+#: statement.c:3739 statement.c:3746
 msgid "pause"
 msgstr ""
 
-#: statement.c:3829
+#: statement.c:3826
 msgid "Quit without saving? (y/n) "
 msgstr ""
 
-#: statement.c:3836
+#: statement.c:3833
 msgid "yes"
 msgstr ""
 
-#: statement.c:3932
+#: statement.c:3929
 msgid "mask"
 msgstr ""
 
-#: statement.c:3938
+#: statement.c:3935
 msgid "select"
 msgstr ""
 
 #. }}}
-#: statement.c:4014 statement.c:4097
+#: statement.c:4011 statement.c:4094
 msgid "zone width"
 msgstr ""
 

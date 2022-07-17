@@ -73,8 +73,8 @@ install: all
 		  fi; \
 		done
 
-bas.pot: [a-b]*.[ch] [e-s]*.[ch] v*.[ch]
-		xgettext --add-comments --keyword=_ [a-b]*.[ch] [e-s]*.[ch] v*.[ch] && test -f messages.po && mv messages.po $@
+bas.pot: src
+		xgettext --add-comments --keyword=_ src/[a-b]*.[ch] src/[e-s]*.[ch] src/v*.[ch] && test -f messages.po && mv messages.po $@
 
 bas.pdf: bas.1
 		groff -Tps -t -man bas.1 | ps2pdf - $@

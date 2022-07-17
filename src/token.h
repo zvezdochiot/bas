@@ -412,7 +412,7 @@ struct Token
         /* T_SHELL              */
         /* T_SLEEP              */
         /* T_SPC                */
-        /* T_STEP               */
+        /* T_STEP               */ struct Value step;
         /* T_STOP               */
         /* T_STRING             */ struct String *string;
         /* T_SUB                */ /* struct Symbol *localSyms; */
