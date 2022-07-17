@@ -7,8 +7,8 @@ localedir=	@localedir@
 
 CC=		@CC@
 RANLIB=		@RANLIB@
-CFLAGS=		@CFLAGS@
-CPPFLAGS=	@CPPFLAGS@ -DLOCALEDIR=\"$(localedir)\"
+CFLAGS=		@CFLAGS@ -I. -Isrc
+CPPFLAGS=	@CPPFLAGS@ -I. -Isrc -DLOCALEDIR=\"$(localedir)\"
 LDFLAGS=	@LDFLAGS@
 LIBS=		@LIBS@
 
@@ -18,21 +18,20 @@ all:		bas all-po-@USE_NLS@
 all-po-no:
 all-po-yes:	$(CATALOGS)
 
-bas:		main.o libbas.a getopt.o getopt1.o
-		$(CC) -o $@ $(LDFLAGS) main.o libbas.a getopt.o getopt1.o $(LIBS)
+bas: src/main.o libbas.a src/getopt.o src/getopt1.o
+		$(CC) $^ $(LDFLAGS) $(LIBS) -o $@
 
-token.c:	token.l token.h
-		flex -i -t token.l >token.c
+src/token.c: src/token.l src/token.h
+		flex -i -t src/token.l > $@
 
-libbas.a:	auto.o bas.o fs.o global.o token.o program.o \
-		str.o value.o var.o
+libbas.a: src/auto.o src/bas.o src/fs.o src/global.o src/token.o \
+        src/program.o src/str.o src/value.o src/var.o
 		rm -f $@
-		ar cq $@ auto.o bas.o fs.o global.o token.o program.o \
-		str.o value.o var.o
-		@RANLIB@ libbas.a
+		ar cq $@ $^
+		@RANLIB@ $@
 
 cppcheck:
-		cppcheck $(CPPFLAGS) -q --enable=all .
+		cppcheck $(CPPFLAGS) -q --enable=all src
 
 install-po:	install-po-@USE_NLS@
 install-po-no:
@@ -43,10 +42,10 @@ install-po-yes:	$(CATALOGS)
 		  @INSTALL@ -m 644 $$cat $$dir/bas.mo; \
 		done
 
-check:		bas
+check: bas
 		for i in test/test*; do ./$$i || break; done
 
-install:	all
+install: all
 		@INSTALL@ -m 755 -d @bindir@
 		@INSTALL@ bas @bindir@/bas
 		@INSTALL@ -m 755 -d @libdir@
@@ -57,14 +56,14 @@ install:	all
 		make install-po
 
 .c.o:
-		$(CC) -c $(CPPFLAGS) $(CFLAGS) $<
+		$(CC) -c $(CPPFLAGS) $(CFLAGS) $< -o $@
 
 .SUFFIXES:	.po .mo
 
 .po.mo:
 		msgfmt -o $@ $<
 
-*.po:		bas.pot
+*.po: bas.pot
 		for cat in *.po; do \
 		  if msgmerge $$cat bas.pot -o $$cat.tmp; then \
 		    mv -f $$cat.tmp $$cat; \
@@ -74,40 +73,36 @@ install:	all
 		  fi; \
 		done
 
-bas.pot:	[a-b]*.[ch] [e-s]*.[ch] v*.[ch]
+bas.pot: [a-b]*.[ch] [e-s]*.[ch] v*.[ch]
 		xgettext --add-comments --keyword=_ [a-b]*.[ch] [e-s]*.[ch] v*.[ch] && test -f messages.po && mv messages.po $@
 
-bas.pdf:	bas.1
+bas.pdf: bas.1
 		groff -Tps -t -man bas.1 | ps2pdf - $@
 
 #{{{script}}}#{{{ clean
 clean:
-		rm -f *.out core token.c *.o libbas.a *.mo
+		rm -f *.out core src/token.c src/*.o libbas.a *.mo
 #}}}
 #{{{ distclean
-distclean:	clean
+distclean: clean
 		rm -rf autom4te.cache bas config.cache config.h config.log config.status configure.lineno Makefile bas.1 test/runbas
 #}}}
 #{{{ tar
-tar:		bas.pdf distclean
+tar: bas.pdf distclean
 		(b=`pwd`; b=`basename $$b`; cd ..; tar zcvf $$b.tar.gz $$b/LICENSE $$b/INSTALL $$b/Makefile.in $$b/README $$b/NEWS $$b/configure $$b/install-sh $$b/test $$b/[a-z]*.*)
 #}}}
 #{{{ dependencies
-auto.o:	auto.c config.h auto.h programtypes.h var.h value.h str.h token.h autotypes.h program.h
-bas.o:	bas.c config.h getopt.h auto.h programtypes.h var.h value.h str.h token.h autotypes.h \
-	 program.h bas.h error.h fs.h global.h statement.c statement.h
-fs.o:	fs.c config.h fs.h str.h
-getopt.o:	getopt.c config.h getopt.h
-getopt1.o:	getopt1.c config.h getopt.h
-global.o:	global.c config.h auto.h programtypes.h var.h value.h str.h token.h autotypes.h \
-	 program.h bas.h error.h fs.h global.h
-main.o:	main.c config.h getopt.h bas.h
-program.o:	program.c config.h auto.h programtypes.h var.h value.h str.h token.h autotypes.h \
-	 program.h error.h fs.h
-statement.o:	statement.c config.h statement.h
-str.o:	str.c config.h str.h
-token.o:	token.c config.h auto.h programtypes.h var.h value.h str.h token.h autotypes.h \
-	 program.h statement.h
-value.o:	value.c config.h error.h value.h str.h
-var.o:	var.c config.h error.h var.h value.h str.h
+src/auto.o:	src/auto.c config.h src/auto.h src/programtypes.h src/var.h src/value.h src/str.h src/token.h src/autotypes.h src/program.h
+src/bas.o: src/bas.c config.h src/getopt.h src/auto.h src/programtypes.h src/var.h src/value.h src/str.h src/token.h src/autotypes.h src/program.h src/bas.h src/error.h src/fs.h src/global.h src/statement.c src/statement.h
+src/fs.o: src/fs.c config.h src/fs.h src/str.h
+src/getopt.o: src/getopt.c config.h src/getopt.h
+src/getopt1.o: src/getopt1.c config.h src/getopt.h
+src/global.o: src/global.c config.h src/auto.h src/programtypes.h src/var.h src/value.h src/str.h src/token.h src/autotypes.h src/program.h src/bas.h src/error.h src/fs.h src/global.h
+src/main.o: src/main.c config.h src/getopt.h src/bas.h
+src/program.o: src/program.c config.h src/auto.h src/programtypes.h src/var.h src/value.h src/str.h src/token.h src/autotypes.h src/program.h src/error.h src/fs.h
+src/statement.o: src/statement.c config.h src/statement.h
+src/str.o: src/str.c config.h src/str.h
+src/token.o: src/token.c config.h src/auto.h src/programtypes.h src/var.h src/value.h src/str.h src/token.h src/autotypes.h src/program.h src/statement.h
+src/value.o: src/value.c config.h src/error.h src/value.h src/str.h
+src/var.o: src/var.c config.h src/error.h src/var.h src/value.h src/str.h
 #}}}
